@@ -2,6 +2,4 @@
 
 ## Creating a keypair in the region of your choice
 
-
 ## Create a user and provide the programmatic access
-
