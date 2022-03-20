@@ -46,7 +46,7 @@
   
 <br />
   
-<a href="https://aws.amazon.com/console/" target="_blank"><img src="https://allcode.com/wp-content/uploads/2021/02/Group-169-3.png" alt="Well - Improve your productivity and happiness in just 21 days. | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+<a href="https://aws.amazon.com/console/" target="_blank"><img src="https://allcode.com/wp-content/uploads/2021/02/Group-169-3.png" alt="AWS Console" /></a>
   
 </div>
 
