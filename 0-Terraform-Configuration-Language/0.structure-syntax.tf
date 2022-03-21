@@ -1,3 +1,6 @@
+
+# cooonets goes like this:
+
 terraform {
   required_providers {
     aws = {
