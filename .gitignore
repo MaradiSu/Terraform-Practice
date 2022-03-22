@@ -8,5 +8,5 @@
 .terraform
 .DS_Store
 *.csv
-./AWS-Files/*
+AWS-Files/*
 commands.txt
