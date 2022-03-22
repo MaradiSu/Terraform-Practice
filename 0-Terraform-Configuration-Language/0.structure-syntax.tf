@@ -1,5 +1,5 @@
 
-# cooonets goes like this:
+# comments goes like this:
 
 terraform {
   required_providers {
@@ -22,8 +22,12 @@ variable "availability_zones" {
   type = list(string)
 }
 
+
 provider "aws" {
-  region = var.aws_region
+   region     = "ap-south-1"
+   access_key = "AKIATQ37NXB2BYDxxxxx"
+   secret_key = "JzZKiCia2vjbq4zGGGewdbOhnacm2QIMgcBxxxxx"
+   
 }
 
 resource "aws_vpc" "main" {
