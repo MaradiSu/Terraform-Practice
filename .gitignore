@@ -6,6 +6,7 @@
 *.tfstate.backup
 *.lock.info
 *.lock*
+*.config.tfvars
 .terraform
 .DS_Store
 *.csv

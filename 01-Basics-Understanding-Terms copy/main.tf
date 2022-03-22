@@ -1,0 +1,39 @@
+# //////////////////////////////
+# VARIABLES
+# //////////////////////////////
+# //////////////////////////////
+# Terraform Configuration
+# //////////////////////////////
+
+# //////////////////////////////
+# PROVIDERS
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+provider "aws" {
+  access_key = ""
+  secret_key = "/+u"
+  region     = "ap-south-1"
+}
+
+# //////////////////////////////
+# RESOURCES
+# //////////////////////////////
+
+
+
+#IAM User
+
+resource "aws_iam_user" "my_iam_user" {
+    name = "Terraform-Practice-4"
+}
+
+# //////////////////////////////
+# OUTPUT
+# //////////////////////////////
