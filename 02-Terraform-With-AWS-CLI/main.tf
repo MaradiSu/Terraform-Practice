@@ -11,14 +11,18 @@ terraform {
 
 provider "aws" {
   profile = "default"
-  access_key = "AKIA4IATJRRNI7673P7V"
-  secret_key = "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"
+  access_key = ""
+  secret_key = "/"
   region  = "ap-south-1"
 }
+# EC2 is the resource
+# resource "aws-instnace" "local_name"{
+  # AMI = "ami-0f9c9e9b7e6c69f1f"
 
+#}
 resource "aws_instance" "app_server" {
   ami           = "ami-06a0b4e3b7eb7a300"
-  key_name               = "raining-Key"
+  key_name               = "Training-Key"
   instance_type = "t2.micro"
 vpc_security_group_ids = [aws_security_group.http_server_sg.id]
 
@@ -36,25 +40,20 @@ vpc_security_group_ids = [aws_security_group.http_server_sg.id]
     inline = [
       "sudo yum install httpd -y",
       "sudo service httpd start",
-      "echo Welcome - Virtual Server is at ${self.public_dns} | sudo tee /var/www/html/index.html"
+      "echo Welcome ALL to teh course - Virtual Server is at ${self.public_dns} | sudo tee /var/www/html/index.html"
     ]
   }
+
   tags = {
     Name = "ExampleAppServerInstance"
   }
 }
 
   
-
-
-resource "aws_default_vpc" "default" {
-
-}
-
 resource "aws_security_group" "http_server_sg" {
   name = "sample_http_server_sg"
-  vpc_id = "vpc-c49ff1be"
- //vpc_id = aws_default_vpc.default.id
+  #vpc_id = "vpc-c49ff1be"
+ vpc_id = aws_default_vpc.default.id
 
   ingress {
     from_port   = 80
@@ -82,6 +81,13 @@ resource "aws_security_group" "http_server_sg" {
   }
 }
 
+resource "aws_default_vpc" "default" {
+
+}
+
+output "http_server_public_dns" {
+  value = aws_instance.app_server.public_dns
+}
 
 data "aws_subnet_ids" "default_subnets" {
   vpc_id = aws_default_vpc.default.id
@@ -104,6 +110,3 @@ output "aws_security_group_http_server_details" {
   value = aws_security_group.http_server_sg
 }
 
-output "http_server_public_dns" {
-  value = aws_instance.app_server.public_dns
-}
