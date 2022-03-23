@@ -11,8 +11,8 @@ terraform {
 
 provider "aws" {
   profile = "default"
-  access_key = ""
-  secret_key = "/"
+  #access_key = ""
+  #secret_key = "/"
   region  = "ap-south-1"
 }
 # EC2 is the resource
