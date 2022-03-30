@@ -13,19 +13,19 @@ provider "aws" {
   profile = "default"
   #access_key = ""
   #secret_key = "/"
-  region  = "ap-south-1"
+  region = "ap-south-1"
 }
 # EC2 is the resource
 # resource "aws-instnace" "local_name"{
-  # AMI = "ami-0f9c9e9b7e6c69f1f"
+# AMI = "ami-0f9c9e9b7e6c69f1f"
 
 #}
 resource "aws_instance" "app_server" {
-  ami           = "ami-06a0b4e3b7eb7a300"
+  ami = "ami-06a0b4e3b7eb7a300"
   #ami = data.aws
   key_name               = "Training-Key"
-  instance_type = "t2.micro"
-vpc_security_group_ids = [aws_security_group.http_server_sg.id]
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.http_server_sg.id]
 
   //subnet_id              = "subnet-3f7b2563"
   //subnet_id = tolist(data.aws_subnet_ids.default_subnets.ids)[0]
@@ -50,11 +50,11 @@ vpc_security_group_ids = [aws_security_group.http_server_sg.id]
   }
 }
 
-  
+
 resource "aws_security_group" "http_server_sg" {
   name = "sample_http_server_sg"
   #vpc_id = "vpc-c49ff1be"
- vpc_id = aws_default_vpc.default.id
+  vpc_id = aws_default_vpc.default.id
 
   ingress {
     from_port   = 80
