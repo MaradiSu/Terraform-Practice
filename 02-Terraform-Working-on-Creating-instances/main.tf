@@ -9,11 +9,11 @@
 # }
 /*variable  "aws_access_key" {
   description = "AWS Access Key"
- default = "AKIA4IATJRRNHEE2HV5V"
+ default = ""
 }
 variable "aws_secret_key"{
 description = "AWS Secret Key"
-default="z4XiLwEc7jEyLAo1eZ7VrBzmq3AKpd4x5AY"
+default=""
 }*/
 
 
