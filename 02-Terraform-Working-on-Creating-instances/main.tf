@@ -24,7 +24,7 @@ variable "aws_instance_name" {
 }
 variable "aws_instance_type" {
   description = "AWS Instance Type"
-  type = string # true or false 
+  type        = string # true or false 
 
   default = "t2.micro"
   #default = true
@@ -85,6 +85,11 @@ output "instance_id" {
 output "instance_public_ip" {
   description = "Public IP address of the EC2 instance"
   value       = aws_instance.app_server.public_ip
+}
+output "aws_instace_type" {
+  description = "AWS Instance Type"
+  value       = aws_instance.app_server.instance_type
+
 }
 
 
