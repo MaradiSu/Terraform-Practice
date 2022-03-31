@@ -1,3 +1,41 @@
+# //////////////////////////////
+# VARIABLES
+# //////////////////////////////
+# Syntax for variables:
+
+# Variable "variable_name"{
+#   description = "description"
+#   default = "default"
+# }
+/*variable  "aws_access_key" {
+  description = "AWS Access Key"
+ default = ""
+}
+variable "aws_secret_key"{
+description = "AWS Secret Key"
+default=""
+}*/
+
+
+variable "aws_instance_name" {
+  description = "AWS Instance Name"
+  type        = string #any, number, string, boolean, object, list
+  default     = "test-instance"
+}
+variable "aws_instance_type" {
+  description = "AWS Instance Type"
+  type        = string # true or false 
+
+  default = "t2.micro"
+  #default = true
+}
+variable "aws_region" {
+  description = "AWS Region"
+  default     = "ap-south-1"
+}
+# //////////////////////////////
+# Terraform Configuration
+# //////////////////////////////
 terraform {
   required_providers {
     aws = {
@@ -5,109 +43,51 @@ terraform {
       version = "~> 3.27"
     }
   }
-
   required_version = ">= 0.14.9"
 }
 
+# //////////////////////////////
+# PROVIDERS
+# //////////////////////////////
 provider "aws" {
   profile = "default"
-  #access_key = ""
-  #secret_key = "/"
-  region = "ap-south-1"
+  #region = "ap-south-1"
+  region = var.aws_region
+  #secret_key = var.aws_secret_key
 }
-# EC2 is the resource
-# resource "aws-instnace" "local_name"{
-# AMI = "ami-0f9c9e9b7e6c69f1f"
 
-#}
+# //////////////////////////////
+# RESOURCES
+# //////////////////////////////
 resource "aws_instance" "app_server" {
-  ami = "ami-06a0b4e3b7eb7a300"
-  #ami = data.aws
-  key_name               = "Training-Key"
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.http_server_sg.id]
-
-  //subnet_id              = "subnet-3f7b2563"
-  //subnet_id = tolist(data.aws_subnet_ids.default_subnets.ids)[0]
-
-  connection {
-    type        = "ssh"
-    host        = self.public_ip
-    user        = "ec2-user"
-    private_key = file("Training-Key.pem")
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo yum install httpd -y",
-      "sudo service httpd start",
-      "echo Welcome ALL to teh course - Virtual Server is at ${self.public_dns} | sudo tee /var/www/html/index.html"
-    ]
-  }
+  ami           = "ami-06a0b4e3b7eb7a300"
+  instance_type = var.aws_instance_type
 
   tags = {
-    Name = "ExampleAppServerInstance"
+    #Name = "ExampleAppServerInstance"
+    Name = var.aws_instance_name
   }
 }
 
-
-resource "aws_security_group" "http_server_sg" {
-  name = "sample_http_server_sg"
-  #vpc_id = "vpc-c49ff1be"
-  vpc_id = aws_default_vpc.default.id
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    name = "http_server_sg"
-  }
+#Outputs
+# //////////////////////////////
+# OUTPUTS
+# //////////////////////////////
+# Syntax for outputs:
+#output "example_name"{
+#  value = "example_value"
+#}
+output "instance_id" {
+  description = "ID of the EC2 instance"
+  value       = aws_instance.app_server.id
 }
 
-resource "aws_default_vpc" "default" {
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.app_server.public_ip
+}
+output "aws_instace_type" {
+  description = "AWS Instance Type"
+  value       = aws_instance.app_server.instance_type
 
 }
-
-output "http_server_public_dns" {
-  value = aws_instance.app_server.public_dns
-}
-
-data "aws_subnet_ids" "default_subnets" {
-  vpc_id = aws_default_vpc.default.id
-}
-
-data "aws_ami" "aws_linux_2_latest" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm-*"]
-  }
-}
-
-data "aws_ami_ids" "aws_linux_2_latest_ids" {
-  owners = ["amazon"]
-}
-
-output "aws_security_group_http_server_details" {
-  value = aws_security_group.http_server_sg
-}
-
