@@ -1,0 +1,2 @@
+Combinational logic circuits
+Definition of a combinational logic circuit is a circuit that has no internal state.
