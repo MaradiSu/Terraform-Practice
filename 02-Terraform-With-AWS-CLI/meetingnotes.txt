@@ -1,4 +1,0 @@
-inside config file
-outside the file
-tfvars file
-commandline vars

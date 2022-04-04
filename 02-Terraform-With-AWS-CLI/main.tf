@@ -91,3 +91,4 @@ output "aws_instace_type" {
   value       = aws_instance.app_server.instance_type
 
 }
+
