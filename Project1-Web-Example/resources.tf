@@ -84,4 +84,7 @@ resource "aws_instance" "nodejs1" {
     user        = "ec2-user"
     private_key = file(var.private_key_path)
   }
+  tags = {
+    Name = "nodejs-instance"
+  }
 }
